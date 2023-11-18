@@ -6,7 +6,7 @@
     <div class="flex justify-center">
         <div class="mt-9"><svelte:component this={TrafficCone} /> </div>
         <div class="mt-5">
-            <h1 class="text-6xl font-bold p-4 w-full">Traffic Planner Dev</h1>
+            <h1 class="text-6xl font-bold p-4 w-full header">Traffic Planner Dev</h1>
         </div>
     </div>
     <div class="content">
@@ -60,5 +60,20 @@
         margin-right: auto;
         padding-top: auto;
         border-top: 2px #94a3b8 dashed;
+    }
+
+    @media (max-width: 720px) {
+        .header {
+            font-size: 2rem;
+        }
+        .mt-9{
+            margin-top: 1rem;
+            height: 10px;
+        }
+        :global(svg){
+            width: auto;
+            height: 3rem;
+            margin-top: .5rem;
+        }
     }
 </style>
