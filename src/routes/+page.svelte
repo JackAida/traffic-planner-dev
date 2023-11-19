@@ -23,11 +23,12 @@
             <div class="text-l">Mobile Roads Enhanced is a tool developed to assist Traffic Management Designers/Planners in New Zealand streamline their workflow. I am currently working on getting this to do various other things such as include the NSLR (National Speed Limit Register), TMC (Traffic Management Coordinator) details for each region, including both Local Roads and State Highways which will have to be constantly updated with the help of the Traffic Management Community.
             </div>
             <div class="border-slate-400 border-r-2 text-xl duration-300">
-                <div class="horizontal-splitter duration-300"></div>
-                <svelte:component this={TrafficCone} />This Website is Underconstruction<svelte:component this={TrafficCone} />
+                <div class="horizontal-splitter duration-300 flex justify-center">
+                    <svelte:component this={TrafficCone} size={30} />This Website is Underconstruction<svelte:component this={TrafficCone} size={30} />
+                </div>
             </div>
-            <div class="text-l horizontal-splitter duration-300">
-                <svelte:component this={TrafficCone} />This Website is Underconstruction<svelte:component this={TrafficCone} />
+            <div class="text-l horizontal-splitter duration-300 flex justify-center">
+                <svelte:component this={TrafficCone} size={30} />This Website is Underconstruction<svelte:component this={TrafficCone} size={30} />
             </div>
         </div>
     </div>
