@@ -24,4 +24,4 @@ jobs:
           server: https://trafficplanner.dev
           app: 'www'
           token: '${{ secrets.APP_TOKEN }}'
-          image: 'ghcr.io/JackAida/traffic-planner-dev:latest'
+          image: 'ghcr.io/jackaida/traffic-planner-dev:latest'
