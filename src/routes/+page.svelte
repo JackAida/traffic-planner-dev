@@ -24,10 +24,10 @@
             </div>
             <div class="border-slate-400 border-r-2 text-xl duration-300">
                 <div class="horizontal-splitter duration-300"></div>
-                agdsa
+                <svelte:component this={TrafficCone} />This Website is Underconstruction<svelte:component this={TrafficCone} />
             </div>
             <div class="text-l horizontal-splitter duration-300">
-                agdsa
+                <svelte:component this={TrafficCone} />This Website is Underconstruction<svelte:component this={TrafficCone} />
             </div>
         </div>
     </div>
