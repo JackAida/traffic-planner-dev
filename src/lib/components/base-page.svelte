@@ -26,11 +26,7 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Zen+Maru+Gothic&display=swap');
 
-    :global(html) {
-        background-color: #30293C;
-        overflow-x: hidden;
-    }
-
+    
     .headContainer{
         font-family: 'Barlow Condensed', sans-serif;
         display: flex;
@@ -43,7 +39,7 @@
         margin-right: auto;
         border-bottom: 2px solid #FFF;
     }
-
+    
     .whiteCircle{
         position: absolute;
         width: 1200px;
@@ -54,7 +50,7 @@
         top: -600px;
         left: -600px;
     }
-
+    
     .orangeCircle{
         position: absolute;
         width: 1320px;
@@ -65,7 +61,7 @@
         top: -350px;
         right: -1000px;
     }
-
+    
     .headButtonDiv{
         font-family: 'Zen Maru Gothic', serif;
         display: flex;
@@ -85,5 +81,47 @@
         color: #FFF;
         flex: content;
         padding-right: 1rem;
+    }
+    
+    :global(html) {
+        background-color: #30293C;
+        overflow-x: hidden;
+        transition: 100ms;
+    }
+    
+    @media screen and (max-width: 1140px) {
+        :global(html){
+            font-size: 12px;
+            transition-duration: 100ms;
+        }
+        .headContainer{
+            width: 100%;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        :global(html){
+            font-size: 9px;
+            transition-duration: 100ms;
+        }
+        .headContainer{
+            width: 100%;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        :global(html){
+            font-size: 6px;
+            transition-duration: 100ms;
+        }
+        .headContainer{
+            width: 100%;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
     }
 </style>
