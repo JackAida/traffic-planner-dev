@@ -36,4 +36,11 @@
         margin-right: auto;
         text-align: center;
     }
+    @media only screen and (max-width: 1140px) {
+        .container{
+            width: 100%;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    }
 </style>

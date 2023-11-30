@@ -1,5 +1,6 @@
 <script lang="ts">
     import TrafficCone from "$lib/components/traffic-cone.svelte";
+    import { onMount } from "svelte";
     class ButtonModel {
         href: string;
         label: string;
@@ -9,14 +10,30 @@
         }
     }
     export let buttons: ButtonModel[] = [];
+    export let screenWidth = 0;
+
+    onMount(()=>{
+        screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        onresize = () => {
+            screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        }
+    })
+
 </script>
+
+
 
 <div class="headContainer">
     <div class="flex w-full">
         <TrafficCone size={56}/> Traffic Planner Dev <div class="headButtonDiv">
-            {#each buttons as buttonModel}
-                <a href={buttonModel.href}>{buttonModel.label}</a>
-            {/each}
+            {#if screenWidth > 768}
+                {#each buttons as buttonModel}
+                    <a href={buttonModel.href}>{buttonModel.label}</a>
+                {/each}
+            {/if}
+            {#if screenWidth < 768}
+                <a>Menu</a>
+            {/if}
         </div>
     </div>
 </div>
@@ -103,19 +120,7 @@
 
     @media screen and (max-width: 768px) {
         :global(html){
-            font-size: 9px;
-            transition-duration: 100ms;
-        }
-        .headContainer{
-            width: 100%;
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
-    }
-
-    @media screen and (max-width: 480px) {
-        :global(html){
-            font-size: 6px;
+            font-size: 10px;
             transition-duration: 100ms;
         }
         .headContainer{
