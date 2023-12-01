@@ -64,8 +64,10 @@
         </div>
     </div>
 </div>
-<div class="whiteCircle"></div>
-<div class="orangeCircle"></div>
+<div class="noOverflow">
+    <div class="whiteCircle"></div>
+    <div class="orangeCircle"></div>
+</div>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Zen+Maru+Gothic&display=swap');
@@ -74,6 +76,10 @@
         right: 0;
         top: 0;
         position: absolute;
+    }
+
+    .noOverflow{
+        overflow: hidden;
     }
 
     .popup-menu{
