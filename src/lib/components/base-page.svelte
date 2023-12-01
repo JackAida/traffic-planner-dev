@@ -1,5 +1,6 @@
 <script lang="ts">
     import TrafficCone from "$lib/components/traffic-cone.svelte";
+    import MenuIcon from "./menu-icon.svelte";
     import { onMount } from "svelte";
     class ButtonModel {
         href: string;
@@ -19,20 +20,46 @@
         }
     })
 
+    function toggleMenu(){
+        let menu = document.getElementsByClassName("popup-menu")[0] as HTMLElement;
+        if(menu.style.display == "none" || menu.style.display == ""){
+            menu.style.display = "block";
+            setTimeout(()=>{
+                menu.style.width = "350px";
+            }, 1);
+        }else{
+            menu.style.width = "0px";
+            menu.style.display = "hidden";
+            setTimeout(()=>{
+                menu.style.display = "none";
+            }, 250);
+        }
+    }
+
 </script>
 
 
 
 <div class="headContainer">
     <div class="flex w-full">
-        <TrafficCone size={56}/> Traffic Planner Dev <div class="headButtonDiv">
-            {#if screenWidth > 768}
+        <TrafficCone size={Math.min(Math.max(screenWidth*0.05, 25), 50)}/> Traffic Planner Dev <div class="headButtonDiv">
+            {#if screenWidth > 520}
                 {#each buttons as buttonModel}
                     <a href={buttonModel.href}>{buttonModel.label}</a>
                 {/each}
             {/if}
-            {#if screenWidth < 768}
-                <a>Menu</a>
+            {#if screenWidth <= 520}
+                <a href="#" on:click={()=>(toggleMenu())}><MenuIcon scale={0.15} /></a>
+                <div class="popup-menu">
+                    <a href="#" id="menu-icon" on:click={()=>(toggleMenu())}><MenuIcon scale={0.15} /></a>
+                    <ol>
+                        {#each buttons as buttonModel}
+                        <li>
+                            <a href={buttonModel.href}>{buttonModel.label}</a>
+                        </li>
+                        {/each}
+                    </ol>
+                </div>
             {/if}
         </div>
     </div>
@@ -43,7 +70,28 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Zen+Maru+Gothic&display=swap');
 
-    
+    #menu-icon{
+        right: 0;
+        top: 0;
+        position: absolute;
+    }
+
+    .popup-menu{
+        position: absolute;
+        background-color: rgba(48, 41, 60, 0.752);
+        border-radius: 5px;
+        padding: 0.5rem;
+        top: 2rem;
+        right: 2rem;
+        font-size: 30px;
+        text-align: right;
+        align-content: end;
+        padding-top: 5rem;
+        transition: 250ms;
+        overflow: hidden;
+        display: none;
+    }
+
     .headContainer{
         font-family: 'Barlow Condensed', sans-serif;
         display: flex;
@@ -108,6 +156,7 @@
     
     @media screen and (max-width: 1140px) {
         :global(html){
+            overflow-x: hidden;
             font-size: 12px;
             transition-duration: 100ms;
         }
@@ -120,7 +169,21 @@
 
     @media screen and (max-width: 768px) {
         :global(html){
+            overflow-x: hidden;
             font-size: 10px;
+            transition-duration: 100ms;
+        }
+        .headContainer{
+            width: 100%;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 620px) {
+        :global(html){
+            overflow-x: hidden;
+            font-size: 8px;
             transition-duration: 100ms;
         }
         .headContainer{
