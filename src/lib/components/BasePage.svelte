@@ -1,6 +1,7 @@
 <script lang="ts">
-    import TrafficCone from "$lib/components/traffic-cone.svelte";
-    import MenuIcon from "./menu-icon.svelte";
+	import { goto } from "$app/navigation";
+    import TrafficCone from "$lib/components/TrafficCone.svelte";
+    import MenuIcon from "./MenuIcon.svelte";
     import { onMount } from "svelte";
     class ButtonModel {
         href: string;
@@ -45,7 +46,9 @@
         <TrafficCone size={Math.min(Math.max(screenWidth*0.05, 25), 50)}/> Traffic Planner Dev <div class="headButtonDiv">
             {#if screenWidth > 520}
                 {#each buttons as buttonModel}
-                    <a href={buttonModel.href}>{buttonModel.label}</a>
+                    <a href={buttonModel.href || "/#"}
+                    style="z-index: 10;"
+                    >{buttonModel.label}</a>
                 {/each}
             {/if}
             {#if screenWidth <= 520}
@@ -55,7 +58,7 @@
                     <ol>
                         {#each buttons as buttonModel}
                         <li>
-                            <a href={buttonModel.href}>{buttonModel.label}</a>
+                            <a href={buttonModel.href || "/#"}>{buttonModel.label}</a>
                         </li>
                         {/each}
                     </ol>
@@ -85,6 +88,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        z-index: -1;
     }
 
     .popup-menu{

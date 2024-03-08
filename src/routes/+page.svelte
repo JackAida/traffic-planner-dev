@@ -1,5 +1,5 @@
 <script>
-    import BasePage from "$lib/components/base-page.svelte";
+    import BasePage from "$lib/components/BasePage.svelte";
 </script>
 
 <BasePage buttons={[{href: "/delay-calculations", label: "Delay Calculators"},
