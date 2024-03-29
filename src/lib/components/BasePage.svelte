@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
     import TrafficCone from "$lib/components/TrafficCone.svelte";
     import MenuIcon from "./MenuIcon.svelte";
     import { onMount } from "svelte";
@@ -52,9 +51,9 @@
                 {/each}
             {/if}
             {#if screenWidth <= 520}
-                <a href="#" on:click={()=>(toggleMenu())}><MenuIcon scale={0.15} /></a>
+                <button on:click={()=>(toggleMenu())}><MenuIcon scale={0.15} /></button>
                 <div class="popup-menu">
-                    <a href="#" id="menu-icon" on:click={()=>(toggleMenu())}><MenuIcon scale={0.15} /></a>
+                    <button id="menu-icon" on:click={()=>(toggleMenu())}><MenuIcon scale={0.15} /></button>
                     <ol>
                         {#each buttons as buttonModel}
                         <li>
