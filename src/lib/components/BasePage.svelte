@@ -42,8 +42,7 @@
 
 <div class="headContainer">
     <div class="flex w-full">
-        <TrafficCone size={Math.min(Math.max(screenWidth*0.05, 25), 50)}/> <a href="/"> Traffic Planner Dev </a>
-        <div class="headButtonDiv">
+        <TrafficCone size={Math.min(Math.max(screenWidth*0.05, 25), 50)}/> Traffic Planner Dev <div class="headButtonDiv">
             {#if screenWidth > 535}
                 {#each buttons as buttonModel}
                     <a href={buttonModel.href || "/#"}
