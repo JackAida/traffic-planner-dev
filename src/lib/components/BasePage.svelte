@@ -42,15 +42,16 @@
 
 <div class="headContainer">
     <div class="flex w-full">
-        <TrafficCone size={Math.min(Math.max(screenWidth*0.05, 25), 50)}/> Traffic Planner Dev <div class="headButtonDiv">
-            {#if screenWidth > 520}
+        <TrafficCone size={Math.min(Math.max(screenWidth*0.05, 25), 50)}/> <a href="/"> Traffic Planner Dev </a>
+        <div class="headButtonDiv">
+            {#if screenWidth > 535}
                 {#each buttons as buttonModel}
                     <a href={buttonModel.href || "/#"}
                     style="z-index: 10;"
                     >{buttonModel.label}</a>
                 {/each}
             {/if}
-            {#if screenWidth <= 520}
+            {#if screenWidth <= 535}
                 <button on:click={()=>(toggleMenu())}><MenuIcon scale={0.15} /></button>
                 <div class="popup-menu">
                     <button id="menu-icon" on:click={()=>(toggleMenu())}><MenuIcon scale={0.15} /></button>
@@ -181,7 +182,7 @@
         }
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 795px) {
         :global(html){
             overflow-x: hidden;
             font-size: 10px;
@@ -194,7 +195,7 @@
         }
     }
 
-    @media screen and (max-width: 620px) {
+    @media screen and (max-width: 665px) {
         :global(html){
             overflow-x: hidden;
             font-size: 8px;
