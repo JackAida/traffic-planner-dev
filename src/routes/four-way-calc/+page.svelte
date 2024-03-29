@@ -22,6 +22,10 @@
 
     let outputString: string[];
 
+    function clearOutputString(){
+        outputString = [];
+    }
+
     interface Approach {
         name: string;
         aadt: number;
@@ -89,6 +93,14 @@
         return ["Not possible to clear queues in the target cycle time of " + maxCycleTimeTarget + " minutes. Total Cycle Time would be: " + (totalCycleTime / 60).toFixed(2) + " minutes, queues are expected to get larger and larger every cycle."];
     }
 
+    function lerp(a: number, b: number, t: number): number{
+        return a + (b - a) * t;
+    }
+
+    function scrollToBottom(){
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
     function calc() {
         let approaches: Approach[] = [];
 
@@ -128,6 +140,9 @@
 
         outputString = checkApproaches(approaches);
 
+        setTimeout(() => {
+            scrollToBottom();
+        }, 150);
     }
 
     
@@ -142,16 +157,16 @@
     <br>
     <p>Enter Road Names</p>
     <div class="approachesContainer">
-        <input class="small item1" type="text" placeholder="Approach 1 Name ↓" bind:value={approach1Name} />
-        <input class="small item2" type="text" placeholder="Approach 2 Name ↑" bind:value={approach2Name} />
-        <input class="small item3" type="text" placeholder="Approach 3 Name →" bind:value={approach3Name} />
-        <input class="small item4" type="text" placeholder="← Approach 4 Name" bind:value={approach4Name} />
+        <input class="small item1" type="text" placeholder="Approach 1 Name ↓" bind:value={approach1Name} on:click={clearOutputString}/>
+        <input class="small item2" type="text" placeholder="Approach 2 Name ↑" bind:value={approach2Name} on:click={clearOutputString}/>
+        <input class="small item3" type="text" placeholder="Approach 3 Name →" bind:value={approach3Name} on:click={clearOutputString}/>
+        <input class="small item4" type="text" placeholder="← Approach 4 Name" bind:value={approach4Name} on:click={clearOutputString}/>
     </div>
     
     <div>
         <br>
         <p>Max Target Cycle Time (minutes)</p>
-        <input style="color: black; text-align: center;" class="small" type="number" placeholder="Max Cycle Time" bind:value={maxCycleTimeTarget}/>
+        <input style="color: black; text-align: center;" class="small" type="number" placeholder="Max Cycle Time" bind:value={maxCycleTimeTarget} on:click={clearOutputString}/>
     </div>
 
     <br>
@@ -164,29 +179,29 @@
         {#if approach1Name != ""}
         <div class="approachesContainer2">
             <span style="padding-right: 1rem;">{approach1Name + " ↓"}</span>
-            <input class="items" type="number" placeholder="AADT" bind:value={approach1AADT}/>
-            <span style="padding-left: 3rem;">Bi-Directional?</span> <input  class="items" style="padding-left: 0; width: 50%; padding-right: auto; margin-left: 0; margin-right: auto;" type="checkbox" bind:checked={approach1BiDirectional}>
+            <input class="items" type="number" placeholder="AADT" bind:value={approach1AADT} on:click={clearOutputString}/>
+            <span style="padding-left: 3rem;">Bi-Directional?</span> <input  class="items" style="padding-left: 0; width: 50%; padding-right: auto; margin-left: 0; margin-right: auto;" type="checkbox" bind:checked={approach1BiDirectional} on:click={clearOutputString}>
         </div>
         {/if}
         {#if approach2Name != ""}
         <div class="approachesContainer2">
             <span style="padding-right: 1rem;">{approach2Name + " ↑"}</span>
-            <input class="items" type="number" placeholder="AADT" bind:value={approach2AADT}/>
-            <span style="padding-left: 3rem;">Bi-Directional?</span> <input  class="items" style="padding-left: 0; width: 50%; padding-right: auto; margin-left: 0; margin-right: auto;" type="checkbox" bind:checked={approach2BiDirectional}>
+            <input class="items" type="number" placeholder="AADT" bind:value={approach2AADT} on:click={clearOutputString}/>
+            <span style="padding-left: 3rem;">Bi-Directional?</span> <input  class="items" style="padding-left: 0; width: 50%; padding-right: auto; margin-left: 0; margin-right: auto;" type="checkbox" bind:checked={approach2BiDirectional} on:click={clearOutputString}>
         </div>
         {/if}
         {#if approach3Name != ""}
         <div class="approachesContainer2">
             <span style="padding-right: 1rem;">{approach3Name + " →"}</span>
-            <input class="items" type="number" placeholder="AADT" bind:value={approach3AADT}/>
-            <span style="padding-left: 3rem;">Bi-Directional?</span> <input  class="items" style="padding-left: 0; width: 50%; padding-right: auto; margin-left: 0; margin-right: auto;" type="checkbox" bind:checked={approach3BiDirectional}>
+            <input class="items" type="number" placeholder="AADT" bind:value={approach3AADT} on:click={clearOutputString}/>
+            <span style="padding-left: 3rem;">Bi-Directional?</span> <input  class="items" style="padding-left: 0; width: 50%; padding-right: auto; margin-left: 0; margin-right: auto;" type="checkbox" bind:checked={approach3BiDirectional} on:click={clearOutputString}>
         </div>
         {/if}
         {#if approach4Name != ""}
         <div class="approachesContainer2">
             <span style="padding-right: 1rem;">{approach4Name + " ←"}</span>
-            <input class="items" type="number" placeholder="AADT" bind:value={approach4AADT}/>
-            <span style="padding-left: 3rem;">Bi-Directional?</span> <input  class="items" style="padding-left: 0; width: 50%; padding-right: auto; margin-left: 0; margin-right: auto;" type="checkbox" bind:checked={approach4BiDirectional}>
+            <input class="items" type="number" placeholder="AADT" bind:value={approach4AADT} on:click={clearOutputString}/>
+            <span style="padding-left: 3rem;">Bi-Directional?</span> <input  class="items" style="padding-left: 0; width: 50%; padding-right: auto; margin-left: 0; margin-right: auto;" type="checkbox" bind:checked={approach4BiDirectional} on:click={clearOutputString}>
         </div>
         {/if}    
     </div>
@@ -197,32 +212,32 @@
             {#if approach1Name != ""}
             <div class="approachesContainer2">
                 <span style="padding-right: 1rem;">{approach1Name + " ↓"}</span>
-                <input class="items" type="number" placeholder="Furthest Distance" bind:value={approach1FurthestDistance}/>
+                <input class="items" type="number" placeholder="Furthest Distance" bind:value={approach1FurthestDistance} on:click={clearOutputString}/>
             </div>
             {/if}
             {#if approach2Name != ""}
             <div class="approachesContainer2">
                 <span style="padding-right: 1rem;">{approach2Name + " ↑"}</span>
-                <input class="items" type="number" placeholder="Furthest Distance" bind:value={approach2FurthestDistance}/>
+                <input class="items" type="number" placeholder="Furthest Distance" bind:value={approach2FurthestDistance} on:click={clearOutputString}/>
                 </div>
             {/if}
             {#if approach3Name != ""}
             <div class="approachesContainer2">
                 <span style="padding-right: 1rem;">{approach3Name + " →"}</span>
-                <input class="items" type="number" placeholder="Furthest Distance" bind:value={approach3FurthestDistance}/>
+                <input class="items" type="number" placeholder="Furthest Distance" bind:value={approach3FurthestDistance} on:click={clearOutputString}/>
                 </div>
             {/if}
             {#if approach4Name != ""}
             <div class="approachesContainer2">
                 <span style="padding-right: 1rem;">{approach4Name + " ←"}</span>
-                <input class="items" type="number" placeholder="Furthest Distance" bind:value={approach4FurthestDistance}/>
+                <input class="items" type="number" placeholder="Furthest Distance" bind:value={approach4FurthestDistance} on:click={clearOutputString}/>
                 </div>
             {/if}
         </div>
         <p>
             Output:
         </p>
-        <div class="small" style="background-color: #FFFFFF; color: black; border-radius: 0.25rem;">
+        <div class="small" style="background-color: #FFFFFF; color: black; border-radius: 0.25rem; margin-bottom: 3rem;">
             {#if +(approach1Name != "") + +(approach2Name != "") + +(approach3Name != "") + +(approach4Name != "") > 1}
 
                 <button on:click={calc}>Calculate</button>
@@ -250,7 +265,7 @@
                     {#each outputString as item, index}
                         {#if index > 4}
                             {#if (index - 5) % 5 != 0}
-                            <li style="text-align: left;">{item}</li>
+                            <li style="text-align: left; font-size: 1.5rem;">{item}</li>
                             {:else}
                             <p style="text-align: left;">{item}</p>
                             {/if}
