@@ -12,6 +12,7 @@
     }
     export let buttons: ButtonModel[] = [];
     export let screenWidth = 0;
+    export let pageName = "Traffic Planner Dev";
 
     onMount(()=>{
         screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -38,7 +39,9 @@
 
 </script>
 
-
+<head>
+    <title>{pageName}</title>
+</head>
 
 <div class="headContainer">
     <div class="flex w-full">
@@ -207,4 +210,5 @@
             padding-right: 2rem;
         }
     }
+
 </style>
