@@ -44,7 +44,7 @@
     }
 
     function getVehiclesQueued(approach: Approach): number{
-        return approach.approachQueueLength / ((inPeakHour) ? 8 : 12);
+        return Math.ceil(approach.approachQueueLength / ((inPeakHour) ? 8 : 12));
     }
 
     function removeNonNumbers(this: HTMLInputElement){
