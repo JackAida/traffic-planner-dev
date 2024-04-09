@@ -1,7 +1,10 @@
 <script lang="ts">
     import BasePage from "$lib/components/BasePage.svelte";
+    import Footer from "$lib/components/Footer.svelte";
     
     let maxCycleTimeTarget: number = 5;
+    let totalCycleTime: number = 0;
+    let inPeakHour: boolean = true;
 
     let approach1Name: string = "";
     let approach2Name: string = "";
@@ -41,7 +44,7 @@
     }
 
     function getVehiclesQueued(approach: Approach): number{
-        return approach.approachQueueLength / 8;
+        return approach.approachQueueLength / ((inPeakHour) ? 8 : 12);
     }
 
     function removeNonNumbers(this: HTMLInputElement){
@@ -50,10 +53,10 @@
 
     function doApproach(approach: string, aadt: number, biDirectional: boolean, furthestDistance: number): Approach{
         let approachMtcToMTCTime: number = timeToTravelDistance(furthestDistance, 30);
-        let approachVehiclesPerSecond: number = biDirectional ? ((aadt / 8) / 2) / 3600 : (aadt / 8) / 3600;
+        let approachVehiclesPerSecond: number = biDirectional ? ((aadt / ((inPeakHour) ? 8 : 12)) / 2) / 3600 : (aadt / ((inPeakHour) ? 8 : 12)) / 3600;
         let approachVehiclesPerCycleTarget: number = approachVehiclesPerSecond * maxCycleTimeTarget * 60;
-        let approachQueueLength: number = Math.ceil(approachVehiclesPerCycleTarget) * 8; //8 is the standard distance from rear of one vehicle to front of another
-        let vehiclesInQueue: number = approachQueueLength / 8;
+        let approachQueueLength: number = Math.ceil(approachVehiclesPerCycleTarget) * ((inPeakHour) ? 8 : 12); //8 is the standard distance from rear of one vehicle to front of another
+        let vehiclesInQueue: number = approachQueueLength / ((inPeakHour) ? 8 : 12);
         let approachGoTime: number = Math.ceil( ( approachQueueLength / (30/3.6) ) + vehiclesInQueue * 1.5 ); //can multiply it by 2 to include reaction time / speed up time
         let approachCycleTime: number = approachGoTime + approachMtcToMTCTime;
         return {
@@ -70,7 +73,7 @@
     function checkApproaches(approaches: Approach[]): string[]{
 
         let returnString: string[] = [];
-        let totalCycleTime: number = 0;
+        totalCycleTime = 0;
 
         for (let i = 0; i < approaches.length; i++){
             totalCycleTime += approaches[i].approachCycleTime;
@@ -78,6 +81,7 @@
 
         if (totalCycleTime <= maxCycleTimeTarget * 60){
             returnString.push(`In the event traffic is held on stop for up to ${maxCycleTimeTarget} minutes, the following is expected to occur in order to clear queues and return to normal operation:`);
+        }
             returnString.push("Total Cycle Time: ");
             returnString.push(Math.ceil(totalCycleTime).toString() + " seconds");
             returnString.push("OR");
@@ -90,11 +94,12 @@
                 returnString.push("Approx time on GO to clear queues: " + approaches[i].approachGoTime.toString() + " seconds");
                 returnString.push("Approx time for a vehicle to travel from MTC to MTC(" + approaches[i].furthestDistance.toString() + " meters):" + Math.ceil(timeToTravelDistance(approaches[i].furthestDistance, 30)).toString() + " seconds");
             }
-            
-            return returnString;
+
+        if (totalCycleTime > maxCycleTimeTarget * 60){
+            returnString.unshift("Not possible to clear queues in the target cycle time of " + maxCycleTimeTarget + " minutes. Total Cycle Time would be: " + (totalCycleTime / 60).toFixed(2) + " minutes, queues are expected to get larger each cycle.");
         }
-        
-        return ["Not possible to clear queues in the target cycle time of " + maxCycleTimeTarget + " minutes. Total Cycle Time would be: " + (totalCycleTime / 60).toFixed(2) + " minutes, queues are expected to get larger and larger every cycle."];
+
+        return returnString;
     }
 
     function lerp(a: number, b: number, t: number): number{
@@ -152,7 +157,8 @@
     
 </script>
 
-<BasePage buttons={[{href: "/", label: "Home"},
+<BasePage pageName="Four Way Stop Go Calculator"
+buttons={[{href: "/", label: "Home"},
 {href: "/delay-calculations", label: "Delay Calculators"},
 {href: "https://chromewebstore.google.com/detail/mobile-roads-enhanced/epimgdnmjciljnceicmlijgkfbeidfil", label: "Mobile Roads Enhanced"}]}/>
 
@@ -171,6 +177,16 @@
         <br>
         <p>Max Target Cycle Time (minutes)</p>
         <input style="color: black; text-align: center;" class="small" type="number" placeholder="Max Cycle Time" bind:value={maxCycleTimeTarget} on:click={clearOutputString} on:input={removeNonNumbers}/>
+        <br>
+        <button style="width: 50%;" on:click={()=>{inPeakHour = !inPeakHour;
+            clearOutputString();
+        }}>
+        {#if !inPeakHour}
+            Out of Peak Hour 📉
+        {:else}
+            Peak Hour 📈
+        {/if}
+        </button>
     </div>
 
     <br>
@@ -250,19 +266,19 @@
                     <p>AADTs divided by 2 are to estimate Bi-Directional Flow</p>
                 {/if}
                 {#if approach1Name != "" && approach1AADT}
-                    <p>{approach1Name + " ↓"} has a peak hour flow of: {approach1BiDirectional ? Math.ceil((approach1AADT/8)/2) : Math.ceil(approach1AADT/8)}vph ({approach1BiDirectional ? "(" + approach1AADT.toString() + "/2)/8" : "" + approach1AADT.toString() + "/8"})</p>
+                    <p>{approach1Name + " ↓"} has a {((inPeakHour) ? "Peak" : "Out of Peak")} hour flow of: {approach1BiDirectional ? Math.ceil((approach1AADT/((inPeakHour) ? 8 : 12))/2) : Math.ceil(approach1AADT/((inPeakHour) ? 8 : 12))}vph ({approach1BiDirectional ? "(" + approach1AADT.toString() + `÷2)÷${((inPeakHour) ? 8 : 12)}` : "" + approach1AADT.toString() + `÷${((inPeakHour) ? 8 : 12)}`})</p>
                 {/if}
                 
                 {#if approach2Name != "" && approach2AADT}
-                    <p>{approach2Name + " ↑"} has a peak hour flow of: {approach2BiDirectional ? Math.ceil((approach2AADT/8)/2) : Math.ceil(approach2AADT/8)}vph ({approach2BiDirectional ? "(" + approach2AADT.toString() + "/2)/8" : "" + approach2AADT.toString() + "/8"})</p>
+                    <p>{approach2Name + " ↑"} has a {((inPeakHour) ? "Peak" : "Out of Peak")} hour flow of: {approach2BiDirectional ? Math.ceil((approach2AADT/((inPeakHour) ? 8 : 12))/2) : Math.ceil(approach2AADT/((inPeakHour) ? 8 : 12))}vph ({approach2BiDirectional ? "(" + approach2AADT.toString() + `÷2)÷${((inPeakHour) ? 8 : 12)}` : "" + approach1AADT.toString() + `÷${((inPeakHour) ? 8 : 12)}`})</p>
                 {/if}
                     
                 {#if approach3Name != "" && approach3AADT}
-                    <p>{approach3Name + " →"} has a peak hour flow of: {approach3BiDirectional ? Math.ceil((approach3AADT/8)/2) : Math.ceil(approach3AADT/8)}vph ({approach3BiDirectional ? "(" + approach3AADT.toString() + "/2)/8" : "" + approach3AADT.toString() + "/8"})</p>
+                    <p>{approach3Name + " →"} has a {((inPeakHour) ? "Peak" : "Out of Peak")} hour flow of: {approach3BiDirectional ? Math.ceil((approach3AADT/((inPeakHour) ? 8 : 12))/2) : Math.ceil(approach3AADT/((inPeakHour) ? 8 : 12))}vph ({approach3BiDirectional ? "(" + approach3AADT.toString() + `÷2)÷${((inPeakHour) ? 8 : 12)}` : "" + approach3AADT.toString() + `÷${((inPeakHour) ? 8 : 12)}`})</p>
                 {/if}
                     
                 {#if approach4Name != "" && approach4AADT}
-                    <p>{approach4Name + " ←"} has a peak hour flow of: {approach4BiDirectional ? Math.ceil((approach4AADT/8)/2) : Math.ceil(approach4AADT/8)}vph ({approach4BiDirectional ? "(" + approach4AADT.toString() + "/2)/8" : "" + approach4AADT.toString() + "/8"})</p>
+                    <p>{approach4Name + " ←"} has a {((inPeakHour) ? "Peak" : "Out of Peak")} hour flow of: {approach4BiDirectional ? Math.ceil((approach4AADT/((inPeakHour) ? 8 : 12))/2) : Math.ceil(approach4AADT/((inPeakHour) ? 8 : 12))}vph ({approach4BiDirectional ? "(" + approach4AADT.toString() + `÷2)÷${((inPeakHour) ? 8 : 12)}` : "" + approach4AADT.toString() + `÷${((inPeakHour) ? 8 : 12)}`})</p>
                 {/if}
 
                 {#if outputString}
@@ -275,7 +291,11 @@
                             {/if}
                             
                             {:else}
+                            {#if totalCycleTime > maxCycleTimeTarget * 60}
+                            <p style="color: darkred; font-weight: 600;">{item}</p>
+                            {:else}
                             <p>{item}</p>
+                            {/if}
                         {/if}
                     {/each}
                 {/if}
@@ -286,6 +306,8 @@
         </div>
     {/if}
 </div>
+
+<Footer/>
 
 <style>
     .approachesContainer{
@@ -380,6 +402,7 @@
         margin-left: auto;
         margin-right: auto;
         text-align: center;
+        margin-bottom: 5rem;
     }
     .approachesContainer input{
         width: 100%;
