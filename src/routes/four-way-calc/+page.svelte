@@ -356,6 +356,7 @@ buttons={[{href: "/", label: "Home"},
     /* Firefox */
     input[type=number] {
     -moz-appearance: textfield;
+    appearance: textfield;
     }
 
     .inputContainer{
