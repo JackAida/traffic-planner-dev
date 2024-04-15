@@ -2,8 +2,9 @@
     <div class="left">
         Traffic Planner Dev
     </div>
+<div>Created by: Joshua and Parehiawe</div>
     <div class="right">
-        ©️ Joshua Smith 2023
+        ©️ Joshua Smith & Parehiawe Tuhakaraina 2023
     </div>
 </div>
 
