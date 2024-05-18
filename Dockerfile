@@ -1,7 +1,13 @@
 FROM node:19.7-alpine AS sk-build
 WORKDIR /usr/src/app
 
-ARG TZ=Europe/Stockholm
+ARG PUBLIC_SUPABASE_URL=${PUBLIC_SUPABASE_URL}
+ENV PUBLIC_SUPABASE_URL=${PUBLIC_SUPABASE_URL}
+
+ARG PUBLIC_SUPABASE_ANON_KEY=${PUBLIC_SUPABASE_ANON_KEY}
+ENV PUBLIC_SUPABASE_ANON_KEY=${PUBLIC_SUPABASE_ANON_KEY}
+
+ARG TZ=Pacific/Auckland
 
 COPY . /usr/src/app
 RUN apk --no-cache add curl tzdata
@@ -12,7 +18,7 @@ RUN npm run build
 FROM node:19.7-alpine
 WORKDIR /usr/src/app
 
-ARG TZ=Europe/Stockholm
+ARG TZ=Pacific/Auckland
 RUN apk --no-cache add curl tzdata
 RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
