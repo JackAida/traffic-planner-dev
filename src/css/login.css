@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Zen+Maru+Gothic&display=swap');
+
+.content{
+    font-family: 'Zen Maru Gothic', sans-serif;
+    color: white;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
+    background-color: rgba(0, 0, 0, 0.33);
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 2rem;
+    border: 3px solid #ff660029;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 1rem 1.5rem 1rem;
+    width: 350px;
+    gap: 1.5rem;
+}
+div{
+    width: 100%;
+}
+input{
+    width: 100%;
+    border: 2px solid rgba(0, 0, 0, 0.267);
+    border-radius: 0.25rem;
+    color: black !important;
+    padding: 0.25rem;
+    text-align: center;
+}
+label{
+    width: 100%;
+}
+input[type="submit"]{
+    width: 100%;
+    background-color: #ff6600;
+    font-weight: bold;
+    color: white !important;
+    border: 2px solid rgba(0, 0, 0, 0.267);
+    transition: 250ms ease-in-out;
+}
+input[type="submit"]:hover{
+    background-color: #0091ff;
+}
+
+button{
+    width: 100%;
+    background-color: #ff6600 !important;
+    font-weight: bold !important;
+    color: white !important;
+    border: 2px solid rgba(0, 0, 0, 0.267) !important;
+    transition: 250ms ease-in-out !important;
+    padding: 0.25rem !important;
+    border-radius: 0.25rem !important;
+}
+
+button:hover{
+    background-color: #0091ff !important;
+}
+
+button:disabled{
+    background-color: #919191 !important;
+}
+
+a.button{
+    margin-bottom: 1rem;
+    text-align: center;
+    width: 100%;
+    background-color: #ff6600;
+    color: white;
+    border: 2px solid rgba(0, 0, 0, 0.267);
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    transition: 250ms ease-in-out;
+    font-weight: bold;
+}
+a.button:hover{
+    background-color: #0091ff;
+}
+
+@media screen and (max-height: 660px) {
+    .content{
+        height: 75vh !important;
+        border-radius: 0 !important;
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+    }
+}

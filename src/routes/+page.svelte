@@ -1,9 +1,9 @@
 <script>
     import BasePage from "$lib/components/BasePage.svelte";
-	import Footer from "$lib/components/Footer.svelte";
+    export let data;
 </script>
 
-<BasePage buttons={[{href: "/delay-calculations", label: "Delay Calculators"},
+<BasePage userBarData={data} buttons={[
                     {href: "https://chromewebstore.google.com/detail/mobile-roads-enhanced/epimgdnmjciljnceicmlijgkfbeidfil", label: "Mobile Roads Enhanced"}]}/>
 
 <div class="container">
@@ -19,9 +19,9 @@
     <p>
         For the future of Traffic Management, right here in Aotearoa.
     </p>
-</div>
+    <img style="width: min(70%, 800px);align-self: center; position: absolute; top: 10rem; z-index: -1;" src="./New_Zealand.svg" alt="Solid color map of New Zealand"/>
 
-<Footer/>
+</div>
 
 <style>
     .small {

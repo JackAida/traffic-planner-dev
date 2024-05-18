@@ -1,5 +1,6 @@
 <script lang="ts">
     import TrafficCone from "$lib/components/TrafficCone.svelte";
+    import UserBar from "$lib/components/UserBar.svelte";
     import MenuIcon from "./MenuIcon.svelte";
     import { onMount } from "svelte";
     class ButtonModel {
@@ -12,7 +13,8 @@
     }
     export let buttons: ButtonModel[] = [];
     export let screenWidth = 0;
-    export let pageName = "Traffic Planner Dev";
+    export let pageName = "Traffic Planner Developer";
+    export let userBarData;
 
     onMount(()=>{
         screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -45,7 +47,7 @@
 
 <div class="headContainer">
     <div class="flex w-full">
-        <TrafficCone size={Math.min(Math.max(screenWidth*0.05, 25), 50)}/> <a href="/"> Traffic Planner Dev </a>
+        <TrafficCone size={Math.min(Math.max(screenWidth*0.05, 25), 50)}/> <a href="/"> TrafficPlanner⋅Dev </a>
         <div class="headButtonDiv">
             {#if screenWidth > 535}
                 {#each buttons as buttonModel}
@@ -54,7 +56,7 @@
                     >{buttonModel.label}</a>
                 {/each}
             {/if}
-            {#if screenWidth <= 535}
+            {#if screenWidth <= 535 && buttons.length > 0}
                 <button on:click={()=>(toggleMenu())}><MenuIcon scale={0.15} /></button>
                 <div class="popup-menu">
                     <button id="menu-icon" on:click={()=>(toggleMenu())}><MenuIcon scale={0.15} /></button>
@@ -70,14 +72,13 @@
         </div>
     </div>
 </div>
+<UserBar data={userBarData}/>
 <div class="noOverflow">
     <div class="whiteCircle"></div>
     <div class="orangeCircle"></div>
 </div>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Zen+Maru+Gothic&display=swap');
-
     #menu-icon{
         right: 0;
         top: 0;
@@ -124,6 +125,9 @@
     }
     
     .whiteCircle{
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 2s linear;
         position: absolute;
         width: 1200px;
         height: 1200px;
@@ -135,6 +139,9 @@
     }
     
     .orangeCircle{
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 2s linear;
         position: absolute;
         width: 1320px;
         height: 1320px;
@@ -195,6 +202,16 @@
             width: 100%;
             padding-left: 2rem;
             padding-right: 2rem;
+        }
+        .orangeCircle{
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 2s,opacity 2s linear;
+        }
+        .whiteCircle{
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 2s,opacity 2s linear;
         }
     }
 

@@ -1,7 +1,6 @@
 <script lang="ts">
     import BasePage from "$lib/components/BasePage.svelte";
-    import Footer from "$lib/components/Footer.svelte";
-
+    export let data;
     let postedSpeedLimit: number;
     let temporarySpeedLimit: number;
     let distance: number;
@@ -23,9 +22,8 @@
 
 </script>
 
-<BasePage pageName="TSL Implementation Calculator"
+<BasePage userBarData={data} pageName="TSL Implementation Calculator"
 buttons={[{href: "/", label: "Home"},
-{href: "/delay-calculations", label: "Delay Calculators"},
 {href: "https://chromewebstore.google.com/detail/mobile-roads-enhanced/epimgdnmjciljnceicmlijgkfbeidfil", label: "Mobile Roads Enhanced"}]}/>
 
 <div class="container">
@@ -45,8 +43,6 @@ buttons={[{href: "/", label: "Home"},
         <p>Time increased as a percentage: <span>{(postedSpeedLimit && temporarySpeedLimit && distance) ? ( (postedSpeedLimit /temporarySpeedLimit * 100) - 100 ).toFixed(2) : 0}</span>%</p>
     </div>
 </div>
-
-<Footer/>
 
 <style>
 

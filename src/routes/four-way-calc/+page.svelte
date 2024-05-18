@@ -1,7 +1,8 @@
 <script lang="ts">
     import BasePage from "$lib/components/BasePage.svelte";
-    import Footer from "$lib/components/Footer.svelte";
     
+    export let data;
+
     let maxCycleTimeTarget: number = 5;
     let totalCycleTime: number = 0;
     let inPeakHour: boolean = true;
@@ -158,9 +159,8 @@
     
 </script>
 
-<BasePage pageName="Four Way Stop Go Calculator"
+<BasePage userBarData={data} pageName="Four Way Stop Go Calculator"
 buttons={[{href: "/", label: "Home"},
-{href: "/delay-calculations", label: "Delay Calculators"},
 {href: "https://chromewebstore.google.com/detail/mobile-roads-enhanced/epimgdnmjciljnceicmlijgkfbeidfil", label: "Mobile Roads Enhanced"}]}/>
 
 <div class="container">
@@ -307,8 +307,6 @@ buttons={[{href: "/", label: "Home"},
         </div>
     {/if}
 </div>
-
-<Footer/>
 
 <style>
     .approachesContainer{
