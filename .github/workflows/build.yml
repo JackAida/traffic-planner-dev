@@ -21,6 +21,9 @@ jobs:
         with:
           accessToken: ${{ github.token }}
           containerRegistry: true
+          buildArgs: |
+            PUBLIC_SUPABASE_URL=${{ secrets.PUBLIC_SUPABASE_URL }}
+            PUBLIC_SUPABASE_ANON_KEY=${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
       - name: Deploy on CapRover
         uses: caprover/deploy-from-github@v1.1.2
         with:
