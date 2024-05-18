@@ -87,11 +87,6 @@ buttons={[{href: "/", label: "Home"},
         width: 55%;
         border-radius: 0.25rem;
     }
-
-    .small {
-        font-size: 1.75rem;
-        padding: .75rem;
-    }
     .container{
         font-family: 'Zen Maru Gothic', serif;
         display: flex;
