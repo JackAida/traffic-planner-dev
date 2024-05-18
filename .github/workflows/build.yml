@@ -1,5 +1,8 @@
 name: build + publish
 
+env:
+  PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+  PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
 
 on:
   push:
@@ -9,15 +12,11 @@ on:
 
 jobs:
   build:
-    environment: SUPABASE
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Publish Docker Image
-        env: 
-          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
-          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
         uses: matootie/github-docker@v3.1.0
         with:
           accessToken: ${{ github.token }}
